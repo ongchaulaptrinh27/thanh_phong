@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập Mật Khẩu</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffd6e7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #d14d8b;
+        }
+        
+        .container {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 800px;
+            max-width: 90%;
+        }
+        
+        .image-section {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .couple-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            border: 1px solid rgba(209, 77, 139, 0.2);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .error-message {
+            color: #d14d8b;
+            font-size: 14px;
+            text-align: center;
+            height: 20px;
+            width: 100%;
+        }
+        
+        .input-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        h1 {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 28px;
+            font-weight: normal;
+            color: #d14d8b;
+            text-align: center;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .password-display {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #ffb6d9;
+            border-radius: 10px;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 5px;
+            color: #d14d8b;
+            background-color: white;
+        }
+        
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .key {
+            background-color: white;
+            border: 2px solid #ffb6d9;
+            border-radius: 10px;
+            padding: 15px 0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            color: #d14d8b;
+        }
+        
+        .key:hover {
+            background-color: #fff0f6;
+            transform: scale(1.05);
+        }
+        
+        .key:active {
+            transform: scale(0.95);
+        }
+        
+        .bottom-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .zero-key {
+            width: 110px;
+            background-color: white;
+            border: 2px solid #ffb6d9;
+            border-radius: 10px;
+            padding: 15px 0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            color: #d14d8b;
+        }
+        
+        .delete-key {
+            width: 110px;
+            background-color: #ffb6d9;
+            border: 2px solid #ffb6d9;
+            border-radius: 10px;
+            padding: 15px 0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            color: white;
+        }
+        
+        .delete-key:hover {
+            background-color: #ff9ec7;
+            transform: scale(1.05);
+        }
+        
+        .delete-key:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .image-section, .input-section {
+                padding: 20px;
+            }
+            
+            .couple-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .zero-key, .delete-key {
+                width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="ảnh.jpg" alt="Cặp đôi dễ thương" class="couple-image">
+            <div class="error-message"></div>
+        </div>
+        <div class="input-section">
+            <h1>Nhập pass đi người đẹp</h1>
+            <input type="text" class="password-display" readonly placeholder="••••••" maxlength="6">
+            <div class="keypad">
+                <div class="key">1</div>
+                <div class="key">2</div>
+                <div class="key">3</div>
+                <div class="key">4</div>
+                <div class="key">5</div>
+                <div class="key">6</div>
+                <div class="key">7</div>
+                <div class="key">8</div>
+                <div class="key">9</div>
+            </div>
+            <div class="bottom-row">
+                <div class="zero-key">0</div>
+                <div class="delete-key">x</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordDisplay = document.querySelector('.password-display');
+        const keys = document.querySelectorAll('.key');
+        const zeroKey = document.querySelector('.zero-key');
+        const deleteKey = document.querySelector('.delete-key');
+        const errorMessage = document.querySelector('.error-message');
+        
+        let password = '';
+        const correctPassword = '123456';
+        let attemptsLeft = 3;
+        
+        // Handle number keys
+        keys.forEach(key => {
+            key.addEventListener('click', () => {
+                if (password.length < 6) {
+                    password += key.textContent;
+                    updatePasswordDisplay();
+                    checkAutoSubmit();
+                }
+            });
+        });
+        
+        // Handle zero key
+        zeroKey.addEventListener('click', () => {
+            if (password.length < 6) {
+                password += '0';
+                updatePasswordDisplay();
+                checkAutoSubmit();
+            }
+        });
+        
+        // Handle delete key
+        deleteKey.addEventListener('click', () => {
+            password = password.slice(0, -1);
+            updatePasswordDisplay();
+        });
+        
+        function updatePasswordDisplay() {
+            passwordDisplay.value = password;
+        }
+        
+        function checkAutoSubmit() {
+            if (password.length === 6) {
+                checkPassword();
+            }
+        }
+        
+        function checkPassword() {
+            if (password === correctPassword) {
+                // Correct password
+                errorMessage.textContent = 'Mật khẩu đúng! Đang chuyển hướng...';
+                errorMessage.style.color = '#4CAF50';
+                // Redirect after 1 second
+                setTimeout(() => {
+                    window.location.href = "page1.html";
+                }, 1000);
+            } else {
+                // Wrong password
+                attemptsLeft--;
+                if (attemptsLeft > 0) {
+                    errorMessage.textContent = `Mật khẩu sai. Bạn còn ${attemptsLeft} lần thử lại.`;
+                    password = '';
+                    updatePasswordDisplay();
+                } else {
+                    errorMessage.textContent = 'Bạn đã hết số lần thử. Vui lòng thử lại sau.';
+                    document.querySelectorAll('.key, .zero-key, .delete-key').forEach(el => {
+                        el.style.pointerEvents = 'none';
+                        el.style.opacity = '0.5';
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>

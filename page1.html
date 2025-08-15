@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chào người đẹp</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Patrick+Hand&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fdebe7;
+            font-family: 'Patrick Hand', cursive;
+            text-align: center;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #e78178;
+            margin-bottom: 30px;
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .heart {
+            font-size: 5rem;
+            color: #e78178;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: inline-block; /* Để có thể thêm link bao bọc */
+            text-decoration: none; /* Loại bỏ gạch chân mặc định của link */
+        }
+        
+        .heart:hover {
+            transform: scale(1.1);
+        }
+        
+        .subtext {
+            font-size: 1.5rem;
+            color: #e78178;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+
+        /* Style cho link bao bọc trái tim */
+        .heart-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chào người đẹp</h1>
+        <a href="page2.html" class="heart-link">
+            <div class="heart">❤</div>
+        </a>
+        <div class="subtext">Chạm vào trái tim</div>
+    </div>
+</body>
+</html>

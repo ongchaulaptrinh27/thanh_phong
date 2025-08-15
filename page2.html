@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập pass đi người đẹp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffebf3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 800px;
+        }
+        
+        .illustration {
+            flex: 1;
+            padding: 30px;
+            background-color: #fff5f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .illustration img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .hearts {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #ff6b9d;
+        }
+        
+        .cloud {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-size: 24px;
+            color: #ff9cc0;
+        }
+        
+        .keypad {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .title {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: #d14d82;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .password-display {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 18px;
+            color: #d14d82;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            border: 2px solid #ffb6d5;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+            background-color: #fff9fb;
+            letter-spacing: 2px;
+        }
+        
+        .keypad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .key {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            font-size: 24px;
+            width: 70px;
+            height: 70px;
+            border: 2px solid #ffb6d5;
+            border-radius: 15px;
+            background-color: white;
+            color: #d14d82;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .key:hover {
+            background-color: #fff0f5;
+        }
+        
+        .key:active {
+            transform: scale(0.95);
+            background-color: #ffe0ed;
+        }
+        
+        .clear-btn {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            font-size: 24px;
+            color: #d14d82;
+        }
+        
+        .submit-key {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 18px;
+            background-color: #ff6b9d;
+            color: white;
+        }
+        
+        .message {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #ff6b9d;
+            margin-top: 10px;
+            height: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="illustration">
+            <div class="hearts">❤️</div>
+            <div class="cloud">☁️</div>
+            <!-- Sử dụng ảnh từ file 2.html -->
+            <img src="anh2.jpg" alt="Ảnh minh họa cặp đôi anime">
+        </div>
+        <div class="keypad">
+            <div class="title">Nhập pass đi người đẹp</div>
+            <div class="password-display" id="passwordDisplay">Enter password</div>
+            <div class="keypad-grid">
+                <div class="key" onclick="appendNumber('1')">1</div>
+                <div class="key" onclick="appendNumber('2')">2</div>
+                <div class="key" onclick="appendNumber('3')">3</div>
+                <div class="key" onclick="appendNumber('4')">4</div>
+                <div class="key" onclick="appendNumber('5')">5</div>
+                <div class="key" onclick="appendNumber('6')">6</div>
+                <div class="key" onclick="appendNumber('7')">7</div>
+                <div class="key" onclick="appendNumber('8')">8</div>
+                <div class="key" onclick="appendNumber('9')">9</div>
+                <div class="key clear-btn" onclick="clearPassword()">✕</div>
+                <div class="key" onclick="appendNumber('0')">0</div>
+                <div class="key submit-key" onclick="checkPassword()">✓</div>
+            </div>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        let password = '';
+        const correctPassword = '123456';
+        const passwordLength = 6;
+        
+        function appendNumber(num) {
+            if (password.length < passwordLength) {
+                password += num;
+                updateDisplay();
+                
+                // Tự động kiểm tra khi đủ 6 số
+                if (password.length === passwordLength) {
+                    setTimeout(checkPassword, 300);
+                }
+            }
+        }
+        
+        function clearPassword() {
+            password = '';
+            updateDisplay();
+            document.getElementById('message').textContent = '';
+        }
+        
+        function updateDisplay() {
+            const display = document.getElementById('passwordDisplay');
+            if (password.length === 0) {
+                display.textContent = 'Enter password';
+            } else {
+                display.textContent = '*'.repeat(password.length);
+            }
+        }
+        
+        function checkPassword() {
+            const messageElement = document.getElementById('message');
+            
+            if (password === correctPassword) {
+                messageElement.textContent = 'Mật khẩu đúng! Đang chuyển hướng...';
+                messageElement.style.color = '#4CAF50';
+                
+                // Chuyển hướng sau 1 giây
+                setTimeout(() => {
+                    window.location.href = 'page3.html';
+                }, 1000);
+            } else {
+                messageElement.textContent = 'Mật khẩu sai! Vui lòng thử lại.';
+                messageElement.style.color = '#ff6b9d';
+                password = '';
+                updateDisplay();
+            }
+        }
+    </script>
+</body>
+</html>

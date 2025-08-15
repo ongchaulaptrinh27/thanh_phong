@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player - Dù cho tận thế</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://i.imgur.com/XYZ123.jpg') no-repeat center center fixed; /* THAY LINK ẢNH CỦA BẠN */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        
+        .player {
+            width: 320px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header {
+            font-weight: 900;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #FF8FA3;
+        }
+        
+        .cover-art {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .cover-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .song-info {
+            margin-bottom: 25px;
+        }
+        
+        .song-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .artist {
+            font-size: 16px;
+            color: #DDD;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #FF8FA3, #FF4D6D);
+            border-radius: 3px;
+            width: 0%;
+        }
+        
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #AAA;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+        
+        .control-btn:hover {
+            color: #FF8FA3;
+            transform: scale(1.1);
+        }
+        
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF8FA3, #FF4D6D);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(255, 143, 163, 0.5);
+            transition: all 0.2s;
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 143, 163, 0.7);
+        }
+        
+        .play-btn i {
+            font-size: 24px;
+            margin-left: 3px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Nút quay lại -->
+    <button onclick="window.location.href='page3.html'" 
+            style="position: fixed; 
+                   top: 20px; 
+                   left: 20px; 
+                   padding: 8px 15px; 
+                   border: none; 
+                   border-radius: 8px; 
+                   background: linear-gradient(135deg, #FF8FA3, #FF4D6D); 
+                   color: white; 
+                   font-size: 14px; 
+                   cursor: pointer;
+                   box-shadow: 0 4px 10px rgba(255, 143, 163, 0.5);
+                   transition: all 0.2s;
+                   z-index: 1000;">
+        <i class="fas fa-arrow-left"></i> Quay lại
+    </button>
+
+    <div class="player">
+        <div class="header">MUSIC</div>
+        
+        <div class="cover-art">
+            <img src="phepmau.jpg" alt="Đôi anime" id="coverImage">
+        </div>
+        
+        <div class="song-info">
+            <div class="song-title">phép màu</div>
+            <div class="artist">Erik</div>
+        </div>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <div class="time-info">
+            <span id="currentTime">0:00</span>
+            <span id="duration">3:15</span>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button>
+            <button class="play-btn" id="playBtn">
+                <i class="fas fa-play" id="playIcon"></i>
+            </button>
+            <button class="control-btn" id="nextBtn"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </div>
+
+    <audio id="audioPlayer" src="PhepMauRemix-Cheng-8576601.mp3"></audio> <!-- THAY LINK NHẠC CỦA BẠN -->
+
+   <script>
+    // DOM Elements
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progress = document.getElementById('progress');
+    const progressContainer = document.getElementById('progressContainer');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const coverImage = document.getElementById('coverImage');
+
+    // Play/Pause
+    function togglePlay() {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            playIcon.classList.replace('fa-play', 'fa-pause');
+            playBtn.style.transform = 'scale(1.05)';
+        } else {
+            audioPlayer.pause();
+            playIcon.classList.replace('fa-pause', 'fa-play');
+            playBtn.style.transform = 'scale(1)';
+        }
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+
+    // Update Progress Bar
+    function updateProgress(e) {
+        const { duration, currentTime } = e.srcElement;
+        const progressPercent = (currentTime / duration) * 100;
+        progress.style.width = `${progressPercent}%`;
+        
+        // Update time display
+        currentTimeEl.textContent = formatTime(currentTime);
+    }
+
+    // Set Progress when clicked on progress bar
+    function setProgress(e) {
+        const width = this.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audioPlayer.duration;
+        audioPlayer.currentTime = (clickX / width) * duration;
+    }
+
+    // Format time (seconds to MM:SS)
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    // Update time info
+    function updateTimeInfo() {
+        durationEl.textContent = formatTime(audioPlayer.duration);
+    }
+
+    // Event Listeners
+    audioPlayer.addEventListener('timeupdate', updateProgress);
+    audioPlayer.addEventListener('ended', () => {
+        playIcon.classList.replace('fa-pause', 'fa-play');
+        progress.style.width = '0%';
+        currentTimeEl.textContent = '0:00';
+    });
+    audioPlayer.addEventListener('loadedmetadata', updateTimeInfo);
+    progressContainer.addEventListener('click', setProgress);
+
+    // Next/Prev buttons chuyển sang file khác
+    nextBtn.addEventListener('click', () => {
+        window.location.href = "song3.html"; // Đường dẫn file bài tiếp theo
+    });
+
+    prevBtn.addEventListener('click', () => {
+        window.location.href = "kyniem.html"; // Đường dẫn file bài trước đó
+    });
+
+    // Load cover art animation
+    coverImage.style.opacity = '0';
+    setTimeout(() => {
+        coverImage.style.transition = 'opacity 0.5s ease';
+        coverImage.style.opacity = '1';
+    }, 100);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #FFD1DC;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .title {
+            color: #E75480;
+            font-size: 36px;
+            margin: 40px 0;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .main-frame {
+            background-color: white;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 900px;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .image-section {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-right: 1px solid #FFD1DC;
+        }
+        
+        .couple-image {
+            max-width: 100%;
+            max-height: 100%;
+            border: 5px solid white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            object-fit: contain;
+        }
+        
+        .content-section {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .menu-button {
+            width: 80%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #E75480;
+            border-radius: 8px;
+            background-color: transparent;
+            color: #E75480;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Dancing Script', cursive;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .menu-button:hover {
+            background-color: #FFB6C1;
+            color: white;
+            transform: scale(1.02);
+        }
+        
+        .active {
+            background-color: #FFB6C1;
+            color: white;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 class="title">Cơm nước gì chưa người đẹp</h1>
+    
+    <div class="main-frame">
+        <div class="image-section">
+            <img src="anh2.jpg" alt="Cặp đôi dễ thương" class="couple-image">
+            <div class="error-message"></div>
+        </div>
+        
+        <div class="content-section">
+            <button class="menu-button active" onclick="window.location.href='ngayiu.html'">Ngày yêu</button>
+            <button class="menu-button" onclick="window.location.href='nhatky.html'">Lời nhắn</button>
+            <button class="menu-button" onclick="window.location.href='album.html'">Album</button>
+            <button class="menu-button" onclick="window.location.href='nhac.html'">nhạc em thích</button>
+            <button class="menu-button" onclick="window.location.href='guiem.html'">gữi em</button>
+        </div>
+    </div>
+</body>
+</html>

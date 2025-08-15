@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow Ảnh Dễ Thương</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffebee;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Lớp nền tối */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 100;
+        }
+
+        /* Nút quay lại trên cùng */
+        .back-btn {
+            display: inline-block;
+            margin: 15px;
+            padding: 10px 20px;
+            background-color: #d81b60;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 200;
+        }
+        .back-btn:hover {
+            background-color: #ad1457;
+        }
+        
+        /* Nền trái tim */
+        .hearts-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4081"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+            opacity: 0.2; /* giảm mờ để không lấn nền tối */
+            animation: float 15s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Slideshow container */
+        .slideshow-container {
+            width: 500px;
+            height: 750px;
+            position: relative;
+            margin: 100px auto 50px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 150;
+        }
+        .mySlides {
+            display: none;
+            height: 100%;
+        }
+        .mySlides img {
+            width: 100%;
+            height: calc(100% - 60px);
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .caption {
+            color: #d81b60;
+            font-size: 20px;
+            padding: 5px 0;
+            font-weight: bold;
+        }
+
+        /* Vùng chứa mũi tên dưới cùng */
+        .arrow-container {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .arrow-container a {
+            width: 50px;
+            height: 50px;
+        }
+        .arrow-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <!-- Nút quay lại -->
+    <a class="back-btn" href="page3.html">⬅ Quay lại</a>
+
+    <div class="hearts-background" id="heartsBg"></div>
+    
+    <div class="slideshow-container">
+        <div class="mySlides"><img src="https://picsum.photos/id/1011/700/500"><div class="caption">Ảnh 1</div></div>
+        <div class="mySlides"><img src="https://picsum.photos/id/1012/700/500"><div class="caption">Ảnh 2</div></div>
+        <div class="mySlides"><img src="https://picsum.photos/id/1013/700/500"><div class="caption">Ảnh 3</div></div>
+        <div class="mySlides"><img src="https://picsum.photos/id/1014/700/500"><div class="caption">Ảnh 4</div></div>
+        <div class="mySlides"><img src="https://picsum.photos/id/1015/700/500"><div class="caption">Ảnh 5</div></div>
+
+        <div class="arrow-container">
+            <a onclick="plusSlides(-1)">
+                <img src="phải.png" alt="Prev">
+            </a>
+            <a onclick="plusSlides(1)">
+                <img src="trái.png" alt="Next">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartsBg = document.getElementById('heartsBg');
+            const heartCount = 30;
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                const size = Math.random() * 20 + 10;
+                const posX = Math.random() * window.innerWidth;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 10;
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                heart.style.left = `${posX}px`;
+                heart.style.bottom = `-50px`;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.animationDuration = `${duration}s`;
+                heartsBg.appendChild(heart);
+            }
+        }
+
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) { showSlides(slideIndex += n); }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        setInterval(() => { plusSlides(1); }, 5000);
+        window.onload = createHearts;
+    </script>
+</body>
+</html>
